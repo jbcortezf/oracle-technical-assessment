@@ -34,14 +34,17 @@ variable "user-data" {
 echo "Initiating Instance Customization.."
 touch ~opc/userdata.`date +%s`.start
 
-echo "Installing Apache.."
-yum install -y httpd
+echo "Installing Docker.."
+yum install -y docker
 
-sed -i "s/Listen 80/Listen 8080/g" /etc/httpd/conf/httpd.conf
-echo "<html><head><title>Hello Oracle</title></head><body><h1>Hello Oracle :-)</h1></body></html>" > /var/www/html/index.html
+systemctl enable docker
+systemctl start docker
 
-systemctl enable httpd.service
-systemctl start httpd.service
+mkdir -p /wwwdata
+
+echo "<html><head><title>Hello Oracle</title></head><body><h1>Hello Oracle :-)</h1></body></html>" > /wwwdata/index.html
+
+docker run -d --name httpd -p 8080:80 -v /wwwdata/:/usr/local/apache2/htdocs/:Z httpd:2.4
 
 firewall-offline-cmd --add-service=http
 firewall-offline-cmd --add-port=8080/tcp
