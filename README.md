@@ -17,7 +17,7 @@ compute.tf = the terraform file for the instance configuration
 
 vcn.tf = the terraform file for the network confguration
 
-The result of my deploy can be check at: http://130.61.104.98:8080/
+The result of my deploy can be check at: http://130.61.73.85:8080/
 
 Regards,
 
