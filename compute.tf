@@ -40,14 +40,21 @@ yum install -y docker
 systemctl enable docker
 systemctl start docker
 
-mkdir -p /wwwdata
+echo "Installing Grafana on Docker Container.."
+docker run -d -p 3000:3000 --name grafana -e "GF_INSTALL_PLUGINS=raintank-worldping-app" grafana/grafana:6.5.0
 
-echo "<html><head><title>Hello Oracle</title></head><body><h1>Hello Oracle :-)</h1></body></html>" > /wwwdata/index.html
+echo "Installing Apache.."
+yum install -y httpd
 
-docker run -d --name httpd -p 8080:80 -v /wwwdata/:/usr/local/apache2/htdocs/:Z httpd:2.4
+sed -i "s/Listen 80/Listen 8080/g" /etc/httpd/conf/httpd.conf
+echo "<html><head><title>Hello Oracle</title></head><body><h1>Hello Oracle :-)</h1></body></html>" > /var/www/html/index.html
+
+systemctl enable httpd.service
+systemctl start httpd.service
 
 firewall-offline-cmd --add-service=http
 firewall-offline-cmd --add-port=8080/tcp
+firewall-offline-cmd --add-port=3000/tcp
 
 systemctl enable firewalld
 
@@ -57,6 +64,23 @@ touch ~opc/userdata.`date +%s`.finish
 echo "Finishing apache configuration.."
 
 systemctl restart firewalld
+
+echo "Installing grafana docker image as service to autostart on reboot..."
+
+echo "[Unit]
+Description=Grafana Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start grafana
+ExecStop=/usr/bin/docker stop grafana
+
+[Install]
+WantedBy=default.target" > /etc/systemd/system/grafana.service
+
+systemctl enable grafana.service
 
 EOF
 }

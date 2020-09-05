@@ -3,8 +3,11 @@ variable "user_ocid" {}
 variable "fingerprint" {}
 variable "private_key_path" {}
 variable "region" {}
+
+
 variable "ssh_private_key" {}
 variable "ssh_public_key" {}
+
 variable "compartment_ocid" {}
 
 provider "oci" {
@@ -20,7 +23,7 @@ data "oci_identity_availability_domains" "ADs" {
   compartment_id       = var.tenancy_ocid
 }
 
-# Network Variables
+### Network Variables #####
 
 variable "vcn_cidr_block" {
   default = "10.0.0.0/16"

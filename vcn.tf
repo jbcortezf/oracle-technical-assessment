@@ -64,6 +64,15 @@ resource "oci_core_security_list" "sl_w" {
 
   ingress_security_rules {
                          tcp_options {
+                                      max = 3000
+                                      min = 3000
+                                     }
+                         protocol = "6"
+                         source   = "0.0.0.0/0"
+                         }
+
+  ingress_security_rules {
+                         tcp_options {
                                       max = 443
                                       min = 443
                                      }
