@@ -17,8 +17,14 @@ compute.tf = the terraform file for the instance configuration
 
 vcn.tf = the terraform file for the network confguration
 
-The result of my deploy can be check at: http://130.61.73.85:8080/
+The result of my deploy can be check at: http://130.61.169.242:8080/
 
-Regards,
+Grafana Dashboard for Webserver Monitoring was deployed at: http://130.61.169.242:3000/
+
+User and Password sent to email.
+
+CHEF files under CHEF subdirectory.
+
+Best Regards,
 
 Joao Cortez.
