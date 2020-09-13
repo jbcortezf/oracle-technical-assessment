@@ -37,10 +37,6 @@ variable "subnet_cidr_w1" {
   default = "10.0.10.0/24"
 }
 
-variable "subnet_cidr_w2" {
-  default = "10.0.20.0/24"
-}
-
 variable "instance_shape" {
   default = "VM.Standard2.1"
 }

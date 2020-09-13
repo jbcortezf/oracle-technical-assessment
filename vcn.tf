@@ -3,7 +3,7 @@
 resource "oci_core_virtual_network" "vcn_w" {
   cidr_block     = var.vcn_cidr_block
   compartment_id = var.compartment_ocid
-  display_name   = "vcn_webserver"
+  display_name   = "vcn_zlab"
   dns_label      = "vcn"
 
   provisioner "local-exec" {
@@ -64,6 +64,15 @@ resource "oci_core_security_list" "sl_w" {
 
   ingress_security_rules {
                          tcp_options {
+                                      max = 80
+                                      min = 80
+                                     }
+                         protocol = "6"
+                         source   = "0.0.0.0/0"
+                         }
+
+  ingress_security_rules {
+                         tcp_options {
                                       max = 3000
                                       min = 3000
                                      }
@@ -109,10 +118,10 @@ resource "oci_core_security_list" "sl_w" {
 
 # Subnet Configuration
 
-resource "oci_core_subnet" "subnet-webserver" {
+resource "oci_core_subnet" "subnet-zlab" {
   availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0],"name")
   cidr_block          = var.subnet_cidr_w1
-  display_name        = "subnet-webserver"
+  display_name        = "subnet-zlab"
   security_list_ids   = ["${oci_core_security_list.sl_w.id}"]
   compartment_id      = var.compartment_ocid
   vcn_id              = oci_core_virtual_network.vcn_w.id
