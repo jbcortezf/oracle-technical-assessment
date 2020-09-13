@@ -42,7 +42,7 @@ Scripts are:
 1) install-docker.yml          = just an example to install python36-docker package on webserver, ****but no need to run***
 2) start-docker.yml            = starts the docker httpd container
 3) stop-docker.yml             = stops the docker httpd container
-4) containerchange-log.yml     = change the httpd log environment of the httpd container to a local /wwwlog directory on host machine
+4) change-log.yml     = change the httpd log environment of the httpd container to a local /wwwlog directory on host machine
 
 Ansible Playbooks were placed on /playbooks/ansible-playbooks directory on ansible instance. Please note that, the ansible-playbook command should use -e 'ansible_python_interpreter=/usr/bin/python3'
 
