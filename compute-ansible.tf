@@ -41,8 +41,8 @@ yum install oracle-epel-release-el7.x86_64 -y
 yum install ansible -y
 
 echo "
-[webserver]
-websrv ansible_ssh_host=10.0.10.10" > /etc/ansible/hosts
+[webservers]
+10.0.10.10" > /etc/ansible/hosts
 
 sshpass -f /tmp/password.txt ssh-copy-id -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa.pub root@10.0.10.10
 

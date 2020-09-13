@@ -43,6 +43,10 @@ systemctl restart sshd
 echo "Installing Docker.."
 yum install -y docker
 
+echo "Installing docker support for python36.."
+yum install -y python36-pip
+pip3 install docker-py
+
 systemctl enable docker
 systemctl start docker
 
@@ -69,7 +73,7 @@ systemctl restart firewalld
 echo "Installing grafana docker image as service to autostart on reboot..."
 
 echo "[Unit]
-Description=Grafana Container
+Description=Grafana Docker Container
 Requires=docker.service
 After=docker.service
 
@@ -79,9 +83,26 @@ ExecStart=/usr/bin/docker start grafana
 ExecStop=/usr/bin/docker stop grafana
 
 [Install]
-WantedBy=default.target" > /etc/systemd/system/grafana.service
+WantedBy=default.target" > /etc/systemd/system/grafana-docker.service
 
-systemctl enable grafana.service
+systemctl enable grafana-docker.service
+
+echo "Installing httpd docker image as service to autostart on reboot..."
+
+echo "[Unit]
+Description=Httpd Docker Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start httpd
+ExecStop=/usr/bin/docker stop httpd
+
+[Install]
+WantedBy=default.target" > /etc/systemd/system/httpd-docker.service
+
+systemctl enable httpd-docker.service
 
 EOF
 }
