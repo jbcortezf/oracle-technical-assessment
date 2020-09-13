@@ -46,7 +46,7 @@ Scripts are:
 
 Ansible Playbooks were placed on /playbooks/ansible-playbooks directory on ansible instance.
 
-Just run: ansible-playbook <scriptfile>
+Just run: ansible-playbook filename.yml
      
 Example:
      
