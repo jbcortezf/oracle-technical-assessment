@@ -65,7 +65,6 @@ firewall-offline-cmd --add-port=3000/tcp
 systemctl enable firewalld
 systemctl start firewalld
 
-touch ~opc/userdata.`date +%s`.finish
 echo "Finishing apache configuration.."
 
 systemctl restart firewalld
@@ -103,6 +102,8 @@ ExecStop=/usr/bin/docker stop httpd
 WantedBy=default.target" > /etc/systemd/system/httpd-docker.service
 
 systemctl enable httpd-docker.service
+
+touch ~opc/userdata.`date +%s`.finish
 
 EOF
 }
